@@ -7,6 +7,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup, Tag
 from typing import List, Dict
+import logging
 
 # * ------------------------ CONFIGURACIÓN DE LOGS ------------------------ #
 logger = logging.getLogger(__name__)
@@ -17,9 +18,6 @@ logging.basicConfig(filename='Logs.log',
                     datefmt="%d-%m-%Y %H:%M:%S")
 
 # * -------------------------- FUNCIÓN PRINCIPAL -------------------------- #
-# ~ Función principal, trae la tabla  de los ranking en base a su 
-# ~ desempeño en ciertos ámbitos.
-# ~ tabla_tier_list_ej
 def obtener_tabla_list_ranking(soup) -> Dict[str, str]:
       
     # & Este h4 contiene el título de "Tier List Rankings", por lo que
@@ -53,14 +51,6 @@ def obtener_tabla_list_ranking(soup) -> Dict[str, str]:
 
 
 # * ------------------------- EXTRACCIÓN DE DATOS ------------------------- #
-# ~ Para no tener una función con tanta complejidad arriba, sacaremos los datos
-# ~ en esta función y luego retornaremos un diccionario a la función principal.
-# ~ Esta tabla no está traspuesta como la anterior, así que será mucho más fácil
-# ~ de leer, lo que haremos será leer únicamente la fila que contiene los rankings,
-# ~ como todos los personajes tienen este formato de tabla, simplemente leeremos la fila
-# ~ de izquierda a derecha, donde Main DPS siempre será el primero y Exploration
-# ~ siempre será el último.
-# ~ tabla_tier_list_formato
 def extraer_datos_tabla(filas: List[Tag]) -> Dict[str, str]:
     
     # & Estos son los datos que retornaremos en forma de diccionario
@@ -99,10 +89,6 @@ def extraer_datos_tabla(filas: List[Tag]) -> Dict[str, str]:
     
 
 # * ------------------------- EXTRAER INFO DE IMG ------------------------- #
-# ~ Usaremos esta función para no repetirnos, acá traemos el td que debería contener
-# ~ la información que queremos, para ello, verificamos si existe una imagen, si existe,
-# ~ extraemos el atributo alt de esta, que nos describe el tier. En caso de que 
-# ~ no tengamos imágenes, simplemente leermos el texto, que traerá un -.
 def extraer_rating(td: Tag) -> str:
     
     icono = td.find("img")

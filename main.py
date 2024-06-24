@@ -2,7 +2,7 @@
 # ! Williams Durán
 # ! Limpieza de datos
 
-#^ Importaciones
+# * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Importaciones ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 import pandas as pd
 import info_base
 import ranking_por_tipo
@@ -38,7 +38,7 @@ def cargar_progreso(archivo_progreso):
             return {'ultimo_personaje': -1, 'datos_personajes': []}
     return {'ultimo_personaje': -1, 'datos_personajes': []}
 
-def buscar_info_personajes():
+def buscar_info_personajes() -> None:
     
     # & Traemos el archivo del progreso, para ver si lo tenemos
     archivo_progreso = 'progreso_scraping.json'

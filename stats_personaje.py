@@ -8,6 +8,7 @@ import requests
 from bs4 import BeautifulSoup, Tag
 from typing import List, Dict
 import re 
+import logging
 
 # * ------------------------ CONFIGURACIÓN DE LOGS ------------------------ #
 logger = logging.getLogger(__name__)
@@ -18,14 +19,6 @@ logging.basicConfig(filename='Logs.log',
                     datefmt="%d-%m-%Y %H:%M:%S")
 
 # * -------------------------- FUNCIÓN PRINCIPAL -------------------------- #
-# ~ Función principal, que trae la tabla de las stats del personaje
-# ~ En esta creamos la sopita para encontrar el h3 que tiene el título Stats en
-# ~ ella, por ejemplo "Raiden's stats", sin embargo, no todos los personajes se 
-# ~ llaman igual, así que ocuparemos una expresión regular para encontrarlo. 
-# ~ Luego llamaremos a las funciones que extraerán la información de cada fila.
-# ~ Sin embargo, acá tenemos una tabla doble, una que está activa y otra que no,
-# ~ Por lo que lo haremos por separado para no sobrecargar esta función.
-# ~ tabla_stats_ej
 def obtener_tabla_stats(soup) -> Dict[str, str]:
     
     # & Este h3 contiene como el título del character info, por lo que
@@ -33,13 +26,7 @@ def obtener_tabla_stats(soup) -> Dict[str, str]:
     h3_personaje_stats = soup.find("h3", string=re.compile(".*Stats.*"))
     
     if h3_personaje_stats:
-        
-        # & Acá nos encontramos con un problema, porque hay una tabla oculta y 
-        # & otra activa, por defecto viene activa la de los valores mínimos, mientras
-        # & que la de valores máximos viene oculta, así que vamos a extraerlas
-        # & por separado
-        # & tabla_stats_formato
-        
+ 
         logger.info('Encontramos el div que contiene las tablas, se procede a extraer la información')
         
         div_base = h3_personaje_stats.find_next("div", class_ = "a-tabPanel is-active")
@@ -56,8 +43,6 @@ def obtener_tabla_stats(soup) -> Dict[str, str]:
 
         return {**diccionario_stats_base, **diccionario_stats_max}
 
-# ~ Esta función toma el div que contiene la tabla que queremos analizar
-# ~ y luego retornará los valores que contiene.
 def obtener_stats(div: Tag) -> Dict[str, str]:
     
     # & Estos son los datos que retornaremos en forma de diccionario

@@ -128,7 +128,7 @@ def extraer_datos_tabla(filas: List[Tag]) -> Dict[str, str]:
 
 
 # * -------------------- EXTRACCIÓN DE ACTOR EN INGLÉS -------------------- #
-def extraer_actriz_en(actrices):
+def extraer_actriz_en(actrices: List[Tag]) -> str:
         
     en_seiyuu = ""
                     
@@ -149,7 +149,7 @@ def extraer_actriz_en(actrices):
 
 
 # * -------------------- EXTRACCIÓN DE ACTOR EN JAPONÉS ------------------- #
-def extraer_actriz_jp(actrices):
+def extraer_actriz_jp(actrices: List[Tag]) -> str:
         
     jp_seiyuu = ""
                     
@@ -169,7 +169,7 @@ def extraer_actriz_jp(actrices):
     return jp_seiyuu
    
 # * ------------------------- EXTACCIÓN DE RATING ------------------------- #
-def extraer_rating(th_td):
+def extraer_rating(th_td: List[Tag]) -> str:
 
     # & Así, a veces tenemos tres columnas dentro de la fila, cómo se ve en la imagen
     # & tres_columnas_rating 
